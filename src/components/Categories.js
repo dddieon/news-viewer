@@ -1,5 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
+import { NavLink } from 'react-router-dom'
 
 const categories = [
     { name: 'all', text: '전체보기' },
@@ -17,7 +18,7 @@ const CategoriesBlock = styled.div`
         overflow-x: auto;
     }
 `
-const Category = styled.div`
+const Category = styled(NavLink)`
     font-size: 1.125rem;
     cursor: pointer;
     white-space: pre;
@@ -30,24 +31,31 @@ const Category = styled.div`
     & + & {
         margin-left: 1rem;
     }
-    /* props에 따른 조건부 스타일링 */
-    ${(props) =>
+    /* 1. ----- props에 따른 조건부 스타일링 */
+    /* ${(props) =>
         props.active &&
         css`
             font-weight: 600;
             border-bottom: 2px solid #22b8cf;
             color: #22b8cf;
-        `}
+        `} */
+    /* 2. ----- active라는 클래스일 때 조건부 */
+    &.active {
+        font-weight: 600;
+        border-bottom: 2px solid #22b8cf;
+        color: #22b8cf;
+    }
 `
 
-const Categories = ({ onSelect, category }) => {
+const Categories = () => {
     return (
         <CategoriesBlock>
             {categories.map((c) => (
                 <Category
                     key={c.name}
-                    onClick={() => onSelect(c.name)}
-                    active={category === c.name}
+                    activeClassName="active"
+                    exact={c.name === 'all'}
+                    to={c.name === 'all' ? '/' : `/${c.name}`}
                 >
                     {c.text}
                 </Category>

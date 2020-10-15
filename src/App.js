@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react'
-import axios from 'axios'
-import NewsList from './components/NewsList'
-import Categories from './components/Categories'
+import NewsPage from './pages/NewsPage'
+import { Route } from 'react-router-dom'
 
 function App() {
     const [data, setData] = useState(null)
@@ -12,8 +11,7 @@ function App() {
     }, [])
     return (
         <>
-            <Categories category={category} onSelect={onSelect} />
-            <NewsList category={category} />
+            <Route path="/:category?" component={NewsPage} />
         </>
     )
 }
